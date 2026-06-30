@@ -1,0 +1,284 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* Print CSS Configurations */
+@media print {
+  /* Hide standard page layout and buttons */
+  .no-print,
+  header,
+  footer,
+  aside,
+  nav,
+  button,
+  .app-shell-root,
+  .no-print-wrapper {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Force display of elements marked for print */
+  .print-area-wrapper {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 9999999 !important;
+    background: white !important;
+    visibility: visible !important;
+  }
+
+  /* Target exact page size dynamically */
+  @page {
+    margin: 0 !important;
+  }
+
+  .paper-a4 {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 auto !important;
+    page-break-after: always !important;
+  }
+
+  .paper-a5 {
+    width: 148mm !important;
+    height: 210mm !important;
+    margin: 0 auto !important;
+    page-break-after: always !important;
+  }
+
+  .paper-half_a4 {
+    width: 210mm !important;
+    height: 148mm !important;
+    margin: 0 auto !important;
+    page-break-after: always !important;
+  }
+}
+
+/* Screen aspect ratios preview */
+.preview-a4 {
+  width: 210mm;
+  height: 297mm;
+}
+
+.preview-a5 {
+  width: 148mm;
+  height: 210mm;
+}
+
+.preview-half_a4 {
+  width: 210mm;
+  height: 148mm;
+}
+
+/* Glassmorphism styling */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dark .glass {
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* html2canvas color compat layer: overrides Tailwind v4 OKLCH color variables with standard HEX/RGB codes */
+#invoice-capture-area,
+.print-area-wrapper,
+.preview-a4,
+.preview-a5,
+.preview-half_a4 {
+  --color-zinc-50: #fafafa !important;
+  --color-zinc-100: #f4f4f5 !important;
+  --color-zinc-200: #e4e4e7 !important;
+  --color-zinc-300: #d4d4d8 !important;
+  --color-zinc-400: #a1a1aa !important;
+  --color-zinc-500: #71717a !important;
+  --color-zinc-650: #52525b !important;
+  --color-zinc-600: #52525b !important;
+  --color-zinc-700: #3f3f46 !important;
+  --color-zinc-800: #27272a !important;
+  --color-zinc-900: #18181b !important;
+  --color-zinc-950: #09090b !important;
+  
+  --color-amber-50: #fffbeb !important;
+  --color-amber-100: #fef3c7 !important;
+  --color-amber-200: #fde68a !important;
+  --color-amber-800: #92400e !important;
+  --color-amber-900: #78350f !important;
+
+  --color-emerald-50: #ecfdf5 !important;
+  --color-emerald-800: #065f46 !important;
+  --color-emerald-900: #064e3b !important;
+
+  --color-sky-50: #f0f9ff !important;
+  --color-sky-500: #0ea5e9 !important;
+  --color-sky-600: #0284c7 !important;
+  --color-sky-950: #082f49 !important;
+
+  --color-red-50: #fef2f2 !important;
+  --color-red-600: #dc2626 !important;
+  --color-red-700: #b91c1c !important;
+  --color-red-900: #7f1d1d !important;
+  
+  --background: #ffffff !important;
+  --foreground: #09090b !important;
+  --card: #ffffff !important;
+  --card-foreground: #09090b !important;
+  --popover: #ffffff !important;
+  --popover-foreground: #09090b !important;
+  --primary: #18181b !important;
+  --primary-foreground: #fafafa !important;
+  --secondary: #f4f4f5 !important;
+  --secondary-foreground: #18181b !important;
+  --muted: #f4f4f5 !important;
+  --muted-foreground: #71717a !important;
+  --accent: #f4f4f5 !important;
+  --accent-foreground: #18181b !important;
+  --destructive: #ef4444 !important;
+  --destructive-foreground: #fafafa !important;
+  --border: #e4e4e7 !important;
+  --input: #e4e4e7 !important;
+  --ring: #18181b !important;
+}
