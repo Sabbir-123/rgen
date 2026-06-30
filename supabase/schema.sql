@@ -48,8 +48,9 @@ create table if not exists public.invoices (
     amount_in_words text,
     customer_signature text, -- DataURL or name or text representation
     authorized_signature text, -- DataURL or name or text representation
-    template_id integer not null default 1 check (template_id between 1 and 5),
+    template_id integer not null default 1 check (template_id between 1 and 6),
     paper_size text not null default 'A4' check (paper_size in ('A4', 'A5', 'HALF_A4')),
+    payment_method text default 'Bkash: 01716607988 (send Money)',
     created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -61,6 +62,7 @@ create table if not exists public.invoice_items (
     quantity numeric(10, 2) not null default 1,
     unit_price numeric(10, 2) not null default 0,
     total numeric(12, 2) not null default 0,
+    validity text,
     sort_order integer default 0
 );
 

@@ -34,6 +34,7 @@ export interface InvoiceItem {
   unit_price: number;
   total: number;
   sort_order?: number;
+  validity?: string;
 }
 
 export interface Invoice {
@@ -55,6 +56,7 @@ export interface Invoice {
   authorized_signature?: string;
   template_id: number;
   paper_size: "A4" | "A5" | "HALF_A4";
+  payment_method?: string;
   created_at?: string;
   items?: InvoiceItem[];
   // Expanded fields for easy rendering without manual joins
@@ -404,6 +406,7 @@ export const db = {
             authorized_signature: invoice.authorized_signature,
             template_id: invoice.template_id,
             paper_size: invoice.paper_size,
+            payment_method: invoice.payment_method,
           },
         ]);
 
@@ -416,6 +419,7 @@ export const db = {
               quantity: it.quantity,
               unit_price: it.unit_price,
               total: it.total,
+              validity: it.validity,
               sort_order: it.sort_order,
             }))
           );
@@ -479,6 +483,7 @@ export const db = {
             authorized_signature: invoice.authorized_signature,
             template_id: invoice.template_id,
             paper_size: invoice.paper_size,
+            payment_method: invoice.payment_method,
           })
           .eq("id", id);
 
@@ -494,6 +499,7 @@ export const db = {
               quantity: it.quantity,
               unit_price: it.unit_price,
               total: it.total,
+              validity: it.validity,
               sort_order: idx,
             }))
           );

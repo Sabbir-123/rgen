@@ -42,10 +42,11 @@ export default function NewInvoice() {
   const [templateId, setTemplateId] = useState(1);
   const [paperSize, setPaperSize] = useState<"A4" | "A5" | "HALF_A4">("A4");
   const [notes, setNotes] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("Bkash: 01716607988 (send Money)");
 
   // Table Items State
   const [items, setItems] = useState<Omit<InvoiceItem, "id" | "invoice_id">[]>([
-    { description: "", quantity: 1, unit_price: 0, total: 0 }
+    { description: "", quantity: 1, unit_price: 0, total: 0, validity: "" }
   ]);
 
   // Payment Calculations
@@ -108,6 +109,7 @@ export default function NewInvoice() {
       template3: "Printing Press Offset Bill",
       template4: "Colorful Modern Receipt",
       template5: "Minimal Monochrome Invoice",
+      template6: "IT Mart Style Invoice",
     },
     bn: {
       title: "নতুন ইনভয়েস তৈরি",
@@ -150,6 +152,7 @@ export default function NewInvoice() {
       template3: "প্রিন্টিং প্রেস অফসেট বিল",
       template4: "কালারফুল মডার্ন রশিদ",
       template5: "মিনিমাল সাদা-কালো ইনভয়েস",
+      template6: "আইটি মার্ট স্টাইল ইনভয়েস",
     }
   }[language];
 
@@ -183,6 +186,7 @@ export default function NewInvoice() {
             setTemplateId(inv.template_id);
             setPaperSize(inv.paper_size);
             setNotes(inv.notes || "");
+            setPaymentMethod(inv.payment_method || "Bkash: 01716607988 (send Money)");
             setDiscount(inv.discount);
             setVat(inv.vat);
             setAdvance(inv.advance);
@@ -197,7 +201,8 @@ export default function NewInvoice() {
                 description: item.description,
                 quantity: item.quantity,
                 unit_price: item.unit_price,
-                total: item.total
+                total: item.total,
+                validity: item.validity || ""
               })));
             }
           }
@@ -213,10 +218,10 @@ export default function NewInvoice() {
         setLoading(false);
       }
     }
-
+ 
     initForm();
   }, []);
-
+ 
   // Row Manipulation
   const handleItemChange = (index: number, field: string, val: string | number) => {
     const updated = [...items];
@@ -224,6 +229,8 @@ export default function NewInvoice() {
     
     if (field === "description") {
       item.description = val as string;
+    } else if (field === "validity") {
+      item.validity = val as string;
     } else if (field === "quantity") {
       item.quantity = Number(val);
       item.total = item.quantity * item.unit_price;
@@ -234,9 +241,9 @@ export default function NewInvoice() {
     
     setItems(updated);
   };
-
+ 
   const addRow = () => {
-    setItems([...items, { description: "", quantity: 1, unit_price: 0, total: 0 }]);
+    setItems([...items, { description: "", quantity: 1, unit_price: 0, total: 0, validity: "" }]);
   };
 
   const removeRow = (index: number) => {
@@ -314,6 +321,7 @@ export default function NewInvoice() {
     due,
     status: due <= 0 ? "PAID" : paid > 0 || advance > 0 ? "PARTIAL" : "DUE" as "PAID" | "PARTIAL" | "DUE",
     notes,
+    payment_method: paymentMethod,
     amount_in_words: amountToWords(paid + due, language),
     customer_signature: customerSignature,
     authorized_signature: authorizedSignature,
@@ -348,6 +356,7 @@ export default function NewInvoice() {
             due,
             status: due <= 0 ? "PAID" : paid > 0 || advance > 0 ? "PARTIAL" : "DUE",
             notes,
+            payment_method: paymentMethod,
             amount_in_words: previewInvoiceData.amount_in_words,
             customer_signature: customerSignature,
             authorized_signature: authorizedSignature,
@@ -375,6 +384,7 @@ export default function NewInvoice() {
             due,
             status: due <= 0 ? "PAID" : paid > 0 || advance > 0 ? "PARTIAL" : "DUE",
             notes,
+            payment_method: paymentMethod,
             amount_in_words: previewInvoiceData.amount_in_words,
             customer_signature: customerSignature,
             authorized_signature: authorizedSignature,
@@ -505,6 +515,7 @@ export default function NewInvoice() {
                   <option value={3}>{t.template3}</option>
                   <option value={4}>{t.template4}</option>
                   <option value={5}>{t.template5}</option>
+                  <option value={6}>{t.template6}</option>
                 </select>
               </div>
 
@@ -544,7 +555,7 @@ export default function NewInvoice() {
             <div className="space-y-3">
               {items.map((item, index) => (
                 <div key={index} className="grid grid-cols-12 gap-2 items-start border-b border-zinc-100 dark:border-zinc-800 pb-3 sm:border-none sm:pb-0">
-                  <div className="col-span-12 sm:col-span-6 space-y-1">
+                  <div className="col-span-12 sm:col-span-4 space-y-1">
                     <span className="sm:hidden text-[10px] font-bold text-zinc-400">SL {index + 1} - Description</span>
                     <textarea
                       id={`desc-${index}`}
@@ -556,7 +567,18 @@ export default function NewInvoice() {
                     />
                   </div>
 
-                  <div className="col-span-4 sm:col-span-2 space-y-1">
+                  <div className="col-span-6 sm:col-span-2 space-y-1">
+                    <span className="sm:hidden text-[10px] font-bold text-zinc-400">Validity</span>
+                    <input
+                      type="text"
+                      placeholder="e.g. 01 Months"
+                      value={item.validity || ""}
+                      onChange={(e) => handleItemChange(index, "validity", e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3954] bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white"
+                    />
+                  </div>
+
+                  <div className="col-span-3 sm:col-span-1.5 space-y-1">
                     <span className="sm:hidden text-[10px] font-bold text-zinc-400">Qty</span>
                     <input
                       type="number"
@@ -567,7 +589,7 @@ export default function NewInvoice() {
                     />
                   </div>
 
-                  <div className="col-span-4 sm:col-span-2 space-y-1">
+                  <div className="col-span-3 sm:col-span-2 space-y-1">
                     <span className="sm:hidden text-[10px] font-bold text-zinc-400">Rate</span>
                     <input
                       type="number"
@@ -579,12 +601,12 @@ export default function NewInvoice() {
                     />
                   </div>
 
-                  <div className="col-span-3 sm:col-span-1.5 text-right py-2 text-sm font-bold text-zinc-800 dark:text-white font-mono">
+                  <div className="col-span-8 sm:col-span-1.5 text-right py-2 text-sm font-bold text-zinc-800 dark:text-white font-mono">
                     <span className="sm:hidden text-[10px] font-bold text-zinc-400 block text-left">Total </span>
                     ৳{item.total.toLocaleString()}
                   </div>
 
-                  <div className="col-span-1 py-1 text-center">
+                  <div className="col-span-4 sm:col-span-1 py-1 text-center">
                     <button
                       type="button"
                       onClick={() => removeRow(index)}
@@ -651,6 +673,17 @@ export default function NewInvoice() {
                 value={paid}
                 onChange={(e) => setPaid(Number(e.target.value))}
                 className="w-full px-3.5 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3954] bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white font-mono"
+              />
+            </div>
+
+            <div className="space-y-1 sm:col-span-2">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Payment Method Details</label>
+              <input
+                type="text"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                placeholder="e.g. Bkash: 01716607988 (send Money)"
+                className="w-full px-3.5 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3954] bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white"
               />
             </div>
 

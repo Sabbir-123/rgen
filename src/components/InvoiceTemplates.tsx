@@ -70,6 +70,11 @@ const templateTranslations = {
     bin: "BIN",
     facebook: "Facebook",
     bismillah: "Bismillahir Rahmanir Rahim",
+    validity: "Validity",
+    paymentMethod: "Payment Method",
+    terms: "Term & Condition",
+    manager: "Manager",
+    value: "VALUE",
   },
   bn: {
     invoice: "ইনভয়েস",
@@ -100,6 +105,11 @@ const templateTranslations = {
     bin: "বিন",
     facebook: "ফেসবুক",
     bismillah: "বিসমিল্লাহির রাহমানির রাহিম",
+    validity: "মেয়াদ",
+    paymentMethod: "পেমেন্ট মাধ্যম",
+    terms: "শর্তাবলী",
+    manager: "ম্যানেজার",
+    value: "মূল্য",
   }
 };
 
@@ -814,6 +824,251 @@ export default function InvoiceTemplate({ invoice, language = "en" }: TemplatePr
           <p className="text-center text-[10px] text-zinc-400">
             {shop.footer_text || "Thank you. Quality prints, design, & services."}
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------
+  // TEMPLATE 6: IT Mart Style Invoice (Geometric Teal/Green)
+  // ----------------------------------------------------
+  if (invoice.template_id === 6) {
+    const totalVal = invoice.subtotal - invoice.discount + (invoice.subtotal - invoice.discount) * (invoice.vat / 100);
+    return (
+      <div className="relative w-full h-full p-8 pt-20 pb-16 font-sans text-zinc-800 bg-white shadow-sm overflow-hidden flex flex-col justify-between select-none" style={{ minHeight: '297mm', fontFamily: 'var(--font-outfit), sans-serif' }}>
+        {/* Top Geometric Banner */}
+        <div className="absolute top-0 left-0 right-0 h-28 overflow-hidden z-0">
+          <svg width="100%" height="100%" viewBox="0 0 800 120" preserveAspectRatio="none" className="w-full h-full">
+            {/* Bright Teal overlap */}
+            <path d="M0,0 L550,0 L420,80 L0,120 Z" fill="#0ba595" />
+            {/* Dark Green main */}
+            <path d="M380,0 L800,0 L800,120 L420,80 Z" fill="#0f5a54" />
+          </svg>
+        </div>
+
+        {/* Content Container */}
+        <div className="relative z-10 space-y-6 flex-1 flex flex-col justify-between">
+          <div className="space-y-6">
+            {/* Header / Logo Section */}
+            <div className="flex justify-between items-end border-b border-zinc-100 pb-4">
+              {/* Shop Logo & Name */}
+              <div className="flex flex-col items-start gap-1">
+                {shop.logo_url ? (
+                  <img src={shop.logo_url} alt="Logo" className="h-12 w-auto object-contain max-w-[180px] mb-1" />
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0ba595] to-[#0f5a54] flex items-center justify-center text-white font-extrabold text-xl shadow">
+                      {shop.name ? shop.name[0] : "I"}
+                    </div>
+                    <span className="text-xl font-black text-[#0f5a54] uppercase tracking-wider">{shop.name || "IT Mart"}</span>
+                  </div>
+                )}
+                {shop.category && (
+                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest leading-none">
+                    {shop.category}
+                  </span>
+                )}
+              </div>
+
+              {/* Invoice Text & Number */}
+              <div className="text-right">
+                <h1 className="text-4xl font-black text-[#0f5a54] tracking-wider uppercase leading-none">
+                  {t.invoice}
+                </h1>
+                <p className="text-xs font-bold text-zinc-700 mt-2 font-mono tracking-widest uppercase">
+                  {invoice.invoice_number}
+                </p>
+              </div>
+            </div>
+
+            {/* Customer Details & Grand Value Box */}
+            <div className="grid grid-cols-12 gap-4 items-start pt-2">
+              {/* Billing Info */}
+              <div className="col-span-7 space-y-3">
+                <div>
+                  <h3 className="text-sm font-extrabold text-[#0f5a54] tracking-wide uppercase mb-1">
+                    {t.customerInfo} :
+                  </h3>
+                  <div className="text-xs space-y-1 text-zinc-700">
+                    <p><span className="font-semibold text-zinc-500">{t.name}:</span> <span className="text-zinc-900 font-bold">{customer.name || "Valued Client"}</span></p>
+                    {customer.email && <p><span className="font-semibold text-zinc-500">Email:</span> <span className="text-[#0ba595] font-medium">{customer.email}</span></p>}
+                    {customer.mobile && <p><span className="font-semibold text-zinc-500">Phone:</span> <span className="font-mono text-zinc-900">{customer.mobile}</span></p>}
+                    {customer.address && <p><span className="font-semibold text-zinc-500">Address:</span> <span className="text-zinc-800">{customer.address}</span></p>}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-extrabold text-[#0f5a54] tracking-wide uppercase mb-0.5">
+                    Date Invoice :
+                  </h3>
+                  <p className="text-xs text-zinc-700 font-semibold">{formatDateString(invoice.date)}</p>
+                </div>
+              </div>
+
+              {/* VALUE Large Display Box */}
+              <div className="col-span-5 text-right space-y-2">
+                <div className="text-2xl sm:text-3xl font-black text-[#0f5a54] tracking-tight uppercase">
+                  {t.value}: {formatNumber(totalVal)}/-
+                </div>
+                <p className="text-xs text-zinc-500 italic max-w-xs ml-auto leading-normal whitespace-pre-line bg-zinc-50 p-2 border border-zinc-100 rounded-xl">
+                  {invoice.notes || "Balance due for digital product service"}
+                </p>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-hidden border border-zinc-200 rounded-xl">
+              <table className="w-full text-xs border-collapse">
+                <thead>
+                  <tr className="bg-[#0f5a54] text-white font-extrabold text-left uppercase">
+                    <th className="px-4 py-3 w-[55%]">{t.description}</th>
+                    <th className="px-3 py-3 text-center w-[15%]">{t.validity}</th>
+                    <th className="px-3 py-3 text-center w-[10%]">{t.qty}</th>
+                    <th className="px-3 py-3 text-right w-[10%]">{t.rate}</th>
+                    <th className="px-4 py-3 text-right w-[10%]">{t.total}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {items.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-zinc-50/50">
+                      <td className="px-4 py-3 font-medium text-zinc-800 leading-normal whitespace-pre-line">
+                        {item.description}
+                      </td>
+                      <td className="px-3 py-3 text-center font-semibold text-[#0ba595]">
+                        {item.validity || "—"}
+                      </td>
+                      <td className="px-3 py-3 text-center text-zinc-600 font-mono">
+                        {item.quantity}
+                      </td>
+                      <td className="px-3 py-3 text-right text-zinc-600 font-mono">
+                        {formatNumber(item.unit_price)}
+                      </td>
+                      <td className="px-4 py-3 text-right font-bold text-zinc-950 font-mono">
+                        {formatNumber(item.total)}
+                      </td>
+                    </tr>
+                  ))}
+                  {/* Padding empty rows to maintain layout spacing */}
+                  {items.length < 4 &&
+                    Array.from({ length: 4 - items.length }).map((_, i) => (
+                      <tr key={`empty-${i}`} className="h-10">
+                        <td className="px-4 py-3"></td>
+                        <td className="px-3 py-3"></td>
+                        <td className="px-3 py-3"></td>
+                        <td className="px-3 py-3"></td>
+                        <td className="px-4 py-3"></td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Footer calculations & payment details layout */}
+            <div className="grid grid-cols-12 gap-6 pt-2 items-start">
+              {/* Payment Method Details */}
+              <div className="col-span-7 space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-xs font-extrabold text-[#0f5a54] uppercase tracking-wider">
+                    {t.paymentMethod} :
+                  </h3>
+                  <p className="text-xs font-bold text-[#0f5a54] bg-[#0f5a54]/5 px-3 py-2 rounded-xl border border-[#0f5a54]/20 inline-block font-sans">
+                    {invoice.payment_method || "Bkash: 01716607988 (send Money)"}
+                  </p>
+                </div>
+
+                {/* Term & Conditions */}
+                <div className="space-y-1">
+                  <h3 className="text-xs font-extrabold text-[#0f5a54] uppercase tracking-wider">
+                    {t.terms} :
+                  </h3>
+                  <ul className="text-[10px] text-zinc-500 list-disc list-inside space-y-0.5 leading-normal">
+                    <li>Activation completed successfully as per order.</li>
+                    <li>No refund after successful delivery.</li>
+                    <li>Support available during validity period.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Summary Calculations table */}
+              <div className="col-span-5 space-y-1.5 text-xs">
+                <div className="flex justify-between border-b border-zinc-150 py-1.5 px-1 font-semibold text-zinc-500">
+                  <span>{t.subtotal}</span>
+                  <span className="font-mono text-zinc-800">{formatNumber(invoice.subtotal)}</span>
+                </div>
+                {invoice.discount > 0 && (
+                  <div className="flex justify-between border-b border-zinc-150 py-1.5 px-1 font-semibold text-zinc-500">
+                    <span>{t.discount}</span>
+                    <span className="font-mono text-zinc-800">- {formatNumber(invoice.discount)}</span>
+                  </div>
+                )}
+                {invoice.vat > 0 && (
+                  <div className="flex justify-between border-b border-zinc-150 py-1.5 px-1 font-semibold text-zinc-500">
+                    <span>{t.vat} ({invoice.vat}%)</span>
+                    <span className="font-mono text-zinc-800">+ {formatNumber((invoice.subtotal - invoice.discount) * (invoice.vat / 100))}</span>
+                  </div>
+                )}
+                {invoice.advance > 0 && (
+                  <div className="flex justify-between border-b border-zinc-150 py-1.5 px-1 font-semibold text-[#0ba595]">
+                    <span>{t.advance}</span>
+                    <span className="font-mono text-zinc-800">- {formatNumber(invoice.advance)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center py-2.5 px-3 bg-[#0f5a54]/5 rounded-xl text-sm font-black text-[#0f5a54]">
+                  <span>{t.total}</span>
+                  <span className="font-mono text-base">{formatNumber(totalVal - invoice.advance - invoice.paid)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Signatures & Bottom Decorator */}
+          <div className="space-y-6 pt-6">
+            {/* Signature Pad render */}
+            <div className="flex justify-between items-end px-4">
+              <div className="text-center">
+                {invoice.authorized_signature ? (
+                  <div className="space-y-1">
+                    <img src={invoice.authorized_signature} alt="Signature" className="h-10 max-w-[140px] object-contain mx-auto" />
+                    <div className="w-40 border-t border-zinc-300 mx-auto" />
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider pt-1 leading-none">
+                      {t.manager} ({shop.name || "IT Mart"})
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <div className="h-10 flex items-end justify-center">
+                      <span className="font-serif italic text-lg text-zinc-400 font-medium pb-1">gofur</span>
+                    </div>
+                    <div className="w-40 border-t border-zinc-300 mx-auto" />
+                    <p className="text-[10px] font-bold text-[#0f5a54] uppercase tracking-wider pt-1 leading-none">
+                      {t.manager} ({shop.name || "IT Mart"})
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* QR and Barcode indicators */}
+              <div className="flex items-center gap-3">
+                <QRCodeSVG value={`Invoice:${invoice.invoice_number};Amount:${invoice.paid}`} size={35} />
+                <BarcodeSVG value={invoice.invoice_number} />
+              </div>
+            </div>
+
+            {/* Bottom shop footer text */}
+            <p className="text-center text-[9px] text-zinc-400 tracking-wider">
+              {shop.footer_text || "Thank you. Quality prints, design, & services."}
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Geometric Banner */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden z-0">
+          <svg width="100%" height="100%" viewBox="0 0 800 80" preserveAspectRatio="none" className="w-full h-full">
+            {/* Dark green base */}
+            <path d="M0,80 L800,80 L800,0 L420,40 Z" fill="#0f5a54" />
+            {/* Bright teal layer */}
+            <path d="M0,80 L380,40 L800,80 Z" fill="#0ba595" />
+          </svg>
         </div>
       </div>
     );
