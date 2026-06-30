@@ -835,7 +835,7 @@ export default function InvoiceTemplate({ invoice, language = "en" }: TemplatePr
   if (invoice.template_id === 6) {
     const totalVal = invoice.subtotal - invoice.discount + (invoice.subtotal - invoice.discount) * (invoice.vat / 100);
     return (
-      <div className="relative w-full h-full p-8 pt-20 pb-16 font-sans text-zinc-800 bg-white shadow-sm overflow-hidden flex flex-col justify-between select-none" style={{ minHeight: '297mm', fontFamily: 'var(--font-outfit), sans-serif' }}>
+      <div className="relative w-full h-full p-8 pt-32 pb-16 font-sans text-zinc-800 bg-white shadow-sm overflow-hidden flex flex-col justify-between select-none" style={{ minHeight: '297mm', fontFamily: 'var(--font-outfit), sans-serif' }}>
         {/* Top Geometric Banner */}
         <div className="absolute top-0 left-0 right-0 h-28 overflow-hidden z-0">
           <svg width="100%" height="100%" viewBox="0 0 800 120" preserveAspectRatio="none" className="w-full h-full">
