@@ -17,6 +17,7 @@ create table if not exists public.shops (
     facebook text,
     footer_text text,
     logo_url text,
+    payment_details text default 'Bkash: 01716607988 (send Money)',
     created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 

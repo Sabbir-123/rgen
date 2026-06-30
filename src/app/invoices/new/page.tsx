@@ -221,6 +221,16 @@ export default function NewInvoice() {
  
     initForm();
   }, []);
+
+  // Update default payment method when active shop changes (for new invoices only)
+  useEffect(() => {
+    if (!editId && selectedShopId && shops.length > 0) {
+      const activeShop = shops.find((s) => s.id === selectedShopId);
+      if (activeShop) {
+        setPaymentMethod(activeShop.payment_details || "Bkash: 01716607988 (send Money)");
+      }
+    }
+  }, [selectedShopId, shops, editId]);
  
   // Row Manipulation
   const handleItemChange = (index: number, field: string, val: string | number) => {

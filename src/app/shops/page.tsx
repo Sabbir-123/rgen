@@ -39,6 +39,7 @@ export default function ShopsPage() {
   const [facebook, setFacebook] = useState("");
   const [footerText, setFooterText] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState("");
 
   const t = {
     en: {
@@ -56,6 +57,7 @@ export default function ShopsPage() {
       bin: "BIN (Business Identification No)",
       facebook: "Facebook Page URL",
       footer: "Custom Print Footer Text",
+      payment: "Default Payment Details (e.g. Bkash)",
       logo: "Logo URL or base64 data",
       logoUpload: "Upload Shop Logo",
       logoRemove: "Remove Logo",
@@ -81,6 +83,7 @@ export default function ShopsPage() {
       bin: "বিন (BIN) নম্বর",
       facebook: "ফেসবুক পেজ লিংক",
       footer: "ইনভয়েসের নিচের বার্তা (ফুটনোট)",
+      payment: "ডিফল্ট পেমেন্ট তথ্য (যেমন: বিকাশ)",
       logo: "লোগো URL বা বেস৬৪ ডাটা",
       logoUpload: "লোগো আপলোড",
       logoRemove: "লোগো মুছুন",
@@ -121,6 +124,7 @@ export default function ShopsPage() {
     setFacebook("");
     setFooterText("");
     setLogoUrl("");
+    setPaymentDetails("");
     setEditId(null);
     setIsEditing(false);
   };
@@ -138,6 +142,7 @@ export default function ShopsPage() {
     setFacebook(shop.facebook || "");
     setFooterText(shop.footer_text || "");
     setLogoUrl(shop.logo_url || "");
+    setPaymentDetails(shop.payment_details || "");
     setIsEditing(true);
   };
 
@@ -168,6 +173,7 @@ export default function ShopsPage() {
       facebook,
       footer_text: footerText,
       logo_url: logoUrl,
+      payment_details: paymentDetails,
     };
 
     try {
@@ -327,6 +333,17 @@ export default function ShopsPage() {
                   className="w-full px-3.5 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3954] bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white"
                 />
               </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">{t.payment}</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Bkash: 01716607988 (send Money)"
+                  value={paymentDetails}
+                  onChange={(e) => setPaymentDetails(e.target.value)}
+                  className="w-full px-3.5 py-2.5 text-sm border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0B3954] bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white"
+                />
+              </div>
             </div>
 
             {/* Logo Column */}
@@ -450,6 +467,12 @@ export default function ShopsPage() {
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                     </svg>
                     <span className="truncate">{shop.facebook}</span>
+                  </div>
+                )}
+                {shop.payment_details && (
+                  <div className="flex items-start gap-2 col-span-2 mt-1">
+                    <span className="font-bold text-zinc-450 dark:text-zinc-500">{language === "bn" ? "পেমেন্ট তথ্য:" : "Payment:"}</span>
+                    <span className="font-semibold text-[#0B3954] dark:text-sky-400">{shop.payment_details}</span>
                   </div>
                 )}
               </div>

@@ -14,6 +14,7 @@ export interface Shop {
   facebook?: string;
   footer_text?: string;
   logo_url?: string;
+  payment_details?: string;
   created_at?: string;
 }
 
